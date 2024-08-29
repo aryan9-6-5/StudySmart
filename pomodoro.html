@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintain your Time</title>
+    <link rel="stylesheet" href="styles/pomodoro.css">
+</head>
+<body>
+    <header>
+        <h1>Maintain your Time</h1>
+        <p class="tagline">Boost your productivity with focused study sessions</p>
+    </header>
+    <main>
+        <div id="pomodoro-options">
+            <div class="pomodoro-card" id="set-timer-card">
+                <h3>Set Timer</h3>
+                <p>Configure your study session time.</p>
+                <button class="btn" id="set-timer-btn">Set Timer</button>
+            </div>
+            <div class="pomodoro-card" id="set-alarm-card">
+                <h3>Set Alarm</h3>
+                <p>Configure your break or alarm time.</p>
+                <button class="btn" id="set-alarm-btn">Set Alarm</button>
+            </div>
+        </div>
+        <div id="pomodoro-settings" class="hidden">
+            <div id="timer-settings" class="hidden">
+                <h2>Timer Settings</h2>
+                <input type="number" id="timer-duration" placeholder="Set duration in minutes">
+                <button class="btn" id="save-timer">Save Timer</button>
+            </div>
+            <div id="alarm-settings" class="hidden">
+                <h2>Alarm Settings</h2>
+                <input type="number" id="alarm-duration" placeholder="Set alarm duration in minutes">
+                <button class="btn" id="save-alarm">Save Alarm</button>
+            </div>
+        </div>
+        <div id="timer-display" class="hidden">
+            <h2>Timer: <span id="timer">00:00</span></h2>
+            <button class="btn" id="start-timer">Start Timer</button>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 StudySmart. Designed to inspire learning.</p>
+    </footer>
+    <script src="scripts/pomodoro.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your tasks and deadlines effectively with the StudySmart Task Manager.">
+    <title>StudySmart - Task Manager</title>
+    <link rel="stylesheet" href="styles/todo.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+</head>
+<body>
+    <header>
+        <h1>Task Manager</h1>
+        <p class="tagline">Organize your assignments and deadlines.</p>
+    </header>
+    <main>
+        <section class="task-manager">
+            <form id="taskForm" aria-label="Add new task">
+                <input type="text" id="taskInput" placeholder="Enter new task" aria-label="Task description">
+                <input type="time" id="taskTime" aria-label="Task time"> <!-- Changed to time input -->
+                <button type="submit" class="btn" aria-label="Add task">Add Task</button>
+            </form>
+            <ul id="taskList" aria-label="Task list">
+                <!-- Tasks will be dynamically rendered here -->
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 StudySmart. All rights reserved.</p>
+    </footer>
+    <script src="scripts/todo.js" defer></script>
+</body>
+</html>

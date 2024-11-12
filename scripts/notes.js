@@ -1,103 +1,141 @@
-// Selectors
-const noteForm = document.querySelector('#noteForm');
-const noteTitleInput = document.querySelector('#noteTitle');
-const noteContentInput = document.querySelector('#noteContent');
-const notesList = document.querySelector('#notesList');
+document.addEventListener('DOMContentLoaded', () => {
+    const noteForm = document.getElementById('noteForm');
+    const notesList = document.getElementById('notesList');
+    const notePopup = document.getElementById('notePopup');
+    const popupTitle = document.getElementById('popupTitle');
+    const popupContent = document.getElementById('popupContent');
+    const closePopupBtn = document.getElementById('closePopup');
 
-// Event Listeners
-noteForm.addEventListener('submit', addNote);
-notesList.addEventListener('click', handleNoteAction);
+    // Create popup overlay
+    const popupOverlay = document.createElement('div');
+    popupOverlay.classList.add('popup-overlay');
+    document.body.appendChild(popupOverlay);
 
-// Functions
-function addNote(e) {
-    e.preventDefault();
+    // Load and display existing notes on page load
+    displayNotes();
 
-    const noteTitle = noteTitleInput.value.trim();
-    const noteContent = noteContentInput.value.trim();
-    if (noteTitle === '' || noteContent === '') return;
+    noteForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = document.getElementById('noteTitle').value.trim();
+        const content = document.getElementById('noteContent').value.trim();
+        
+        if (title && content) {
+            // Save note to localStorage
+            saveNote(title, content);
+            
+            // Reset form
+            noteForm.reset();
+            
+            // Refresh notes display
+            displayNotes();
+        }
+    });
 
-    const note = {
-        id: Date.now(),
-        title: noteTitle,
-        content: noteContent,
-        date: new Date().toISOString()
-    };
-
-    const notes = getNotes();
-    notes.push(note);
-    saveNotes(notes);
-    renderNotes();
-
-    noteTitleInput.value = '';
-    noteContentInput.value = '';
-}
-
-function handleNoteAction(e) {
-    const noteCard = e.target.closest('.note-card');
-    if (!noteCard) return;
-
-    if (e.target.classList.contains('edit-btn')) {
-        editNote(noteCard.dataset.id);
-    } else if (e.target.classList.contains('delete-btn')) {
-        deleteNote(noteCard.dataset.id);
-    } else {
-        toggleNoteExpansion(noteCard);
+    function saveNote(title, content) {
+        const notes = getNotes();
+        const newNote = {
+            id: Date.now(),
+            title: title,
+            content: content,
+            date: new Date().toLocaleString()
+        };
+        notes.push(newNote);
+        localStorage.setItem('notes', JSON.stringify(notes));
     }
-}
 
-function editNote(id) {
-    const notes = getNotes();
-    const noteToEdit = notes.find(note => note.id === parseInt(id));
-    if (noteToEdit) {
-        noteTitleInput.value = noteToEdit.title;
-        noteContentInput.value = noteToEdit.content;
-        deleteNote(id);
+    function getNotes() {
+        return JSON.parse(localStorage.getItem('notes')) || [];
     }
-}
 
-function deleteNote(id) {
-    let notes = getNotes();
-    notes = notes.filter(note => note.id !== parseInt(id));
-    saveNotes(notes);
-    renderNotes();
-}
+    function displayNotes() {
+        const notes = getNotes();
+        notesList.innerHTML = '';
+        
+        if (notes.length === 0) {
+            const emptyMessage = document.createElement('div');
+            emptyMessage.textContent = 'No notes yet. Create your first note!';
+            emptyMessage.style.textAlign = 'center';
+            emptyMessage.style.gridColumn = '1 / -1';
+            emptyMessage.style.color = '#666';
+            notesList.appendChild(emptyMessage);
+            return;
+        }
 
-function getNotes() {
-    return JSON.parse(localStorage.getItem('notes')) || [];
-}
+        notes.forEach(note => {
+            const noteItem = createNoteElement(note);
+            notesList.appendChild(noteItem);
+        });
+    }
 
-function saveNotes(notes) {
-    localStorage.setItem('notes', JSON.stringify(notes));
-}
+    function createNoteElement(note) {
+        const noteItem = document.createElement('div');
+        noteItem.classList.add('note-item');
+        
+        // Create delete button
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('delete-btn');
+        deleteBtn.innerHTML = '×';
+        deleteBtn.setAttribute('title', 'Delete note');
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            deleteNote(note.id);
+        });
 
-function renderNotes() {
-    const notes = getNotes();
-    notesList.innerHTML = '';
+        const content = document.createElement('div');
+        content.classList.add('note-content');
+        
+        // Create truncated content for preview
+        const truncatedContent = note.content.length > 150 
+            ? note.content.substring(0, 150) + '...'
+            : note.content;
 
-    notes.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    notes.forEach(note => {
-        const noteCard = document.createElement('div');
-        noteCard.className = 'note-card';
-        noteCard.dataset.id = note.id;
-
-        const formattedDate = new Date(note.date).toLocaleString();
-
-        noteCard.innerHTML = `
+        content.innerHTML = `
             <h3>${note.title}</h3>
-            <p class="date">${formattedDate}</p>
-            <p class="content">${note.content}</p>
-            <button class="btn edit-btn">Edit</button>
-            <button class="btn delete-btn">Delete</button>
+            <small>${note.date}</small>
+            <p>${truncatedContent}</p>
         `;
 
-        notesList.appendChild(noteCard);
+        noteItem.appendChild(deleteBtn);
+        noteItem.appendChild(content);
+
+        // Add click event to show full note
+        noteItem.addEventListener('click', () => {
+            showPopup(note);
+        });
+
+        return noteItem;
+    }
+
+    function showPopup(note) {
+        popupTitle.textContent = note.title;
+        popupContent.textContent = note.content;
+        notePopup.style.display = 'block';
+        popupOverlay.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function deleteNote(id) {
+        if (confirm('Are you sure you want to delete this note?')) {
+            const notes = getNotes().filter(note => note.id !== id);
+            localStorage.setItem('notes', JSON.stringify(notes));
+            displayNotes();
+        }
+    }
+
+    // Close popup handlers
+    closePopupBtn.addEventListener('click', closePopup);
+    popupOverlay.addEventListener('click', closePopup);
+    
+    // Add keyboard support for closing popup
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && notePopup.style.display === 'block') {
+            closePopup();
+        }
     });
-}
 
-function toggleNoteExpansion(noteCard) {
-    noteCard.classList.toggle('expanded');
-}
-
-// Initial render
-renderNotes();
+    function closePopup() {
+        notePopup.style.display = 'none';
+        popupOverlay.style.display = 'none';
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+});

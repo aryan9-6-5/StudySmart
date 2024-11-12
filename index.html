@@ -2,20 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="StudySmart - Enhance your study productivity with tools like Task Manager, Pomodoro Timer, and Smart Notes.">
-    <title>StudySmart - Empowering Your Academic Journey</title>
-    <link rel="stylesheet" href="styles/index.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
-    <link rel="manifest" href="manifest.json">
+    <title>StudySmart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles\index.css">
 </head>
 <body>
-    <header>
-        <h1>StudySmart</h1>
-        <p class="tagline">Empowering Your Academic Journey</p>
-    </header>
-    <main>
+    <div class="navigation-icons">
+        <a href="index.html" aria-label="Home">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3L2 12H5V21H10V15H14V21H19V12H22L12 3Z" fill="#333333"/>
+            </svg>
+        </a>
+        <a href="javascript:history.back()" aria-label="Back">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="#333333"/>
+            </svg>
+        </a>
+    </div>
+
+    <div class="content-wrapper">
+        <header>
+            <h1>StudySmart</h1>
+            <p class="tagline">Empowering Your Academic Journey</p>
+        </header>
+
         <section class="feature-cards">
             <article class="feature-card">
                 <h2>Task Manager</h2>
@@ -23,7 +34,7 @@
                 <a href="todo.html" class="btn">Get Started</a>
             </article>
             <article class="feature-card">
-                <h2>Maintain your Time</h2>
+                <h2>Time Yourself</h2>
                 <p>Boost your productivity with focused study sessions.</p>
                 <a href="pomodoro.html" class="btn">Start Timing</a>
             </article>
@@ -33,10 +44,35 @@
                 <a href="notes.html" class="btn">Take Notes</a>
             </article>
         </section>
-    </main>
+    </div>
     <footer>
         <p>&copy; 2024 StudySmart. Designed to inspire learning.</p>
     </footer>
-    <script src="scripts/app.js" defer></script>
+    <script>
+        // Service Worker Registration
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/scripts/service-worker.js')
+            .then(registration => console.log('Service Worker registered with scope:', registration.scope))
+            .catch(error => console.error('Service Worker registration failed:', error));
+    });
+}
+
+// Event Listeners for feature navigation
+document.addEventListener('DOMContentLoaded', () => {
+    const taskManagerLink = document.querySelector('.feature-card a[href="todo.html"]');
+    const pomodoroLink = document.querySelector('.feature-card a[href="pomodoro.html"]');
+    const notesLink = document.querySelector('.feature-card a[href="notes.html"]');
+    
+    // Example function to log navigation events (if needed)
+    function logNavigation(label) {
+        console.log(`${label} clicked`);
+    }
+
+    taskManagerLink.addEventListener('click', () => logNavigation('Task Manager'));
+    pomodoroLink.addEventListener('click', () => logNavigation('Pomodoro'));
+    notesLink.addEventListener('click', () => logNavigation('Notes'));
+});
+    </script>
 </body>
 </html>

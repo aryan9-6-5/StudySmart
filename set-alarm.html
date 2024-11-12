@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maintain your Time</title>
+    <title>Alarm - StudySmart</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/pomodoro.css">
+    <link rel="stylesheet" href="styles/alarm.css">
 </head>
 <body>
     <div class="navigation-icons">
@@ -23,27 +23,31 @@
 
     <div class="content-wrapper">
         <header>
-            <h1>Maintain your Time</h1>
-            <p class="tagline">Boost your productivity with focused study sessions</p>
+            <h1>Set Your Alarms</h1>
+            <p class="tagline">Prioritize your tasks with smart alarms</p>
         </header>
+        <div class="alarm-container">
+            <div class="alarm-input-group">
+                <input type="time" id="alarmTime" class="time-input" required>
+                <select id="priority" class="priority-select">
+                    <option value="high">High Priority</option>
+                    <option value="medium">Medium Priority</option>
+                    <option value="low">Low Priority</option>
+                </select>
+                <input type="text" id="alarmLabel" class="alarm-label" placeholder="Alarm Label" required>
+                <button onclick="setAlarm()" class="btn">Set Alarm</button>
+            </div>
 
-        <section class="feature-cards">
-            <article class="feature-card">
-                <h2>Set Timer</h2>
-                <p>Configure your study session time and stay focused.</p>
-                <a href="set-timer.html" class="btn">Set Timer</a>
-            </article>
-            <article class="feature-card">
-                <h2>Set Alarm</h2>
-                <p>Configure your break or alarm time to manage your study rhythm.</p>
-                <a href="set-alarm.html" class="btn">Set Alarm</a>
-            </article>
-        </section>
+            <div class="alarms-list" id="alarmsList">
+                <!-- Alarms will be displayed here -->
+            </div>
+        </div>
     </div>
 
     <footer>
         <p>&copy; 2024 StudySmart. Designed to inspire learning.</p>
     </footer>
-    <!-- <script src="scripts/main.js" defer></script> -->
+
+    <script src="scripts/alarm.js" defer></script>
 </body>
 </html>

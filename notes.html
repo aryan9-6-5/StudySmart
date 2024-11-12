@@ -8,25 +8,46 @@
     <link rel="stylesheet" href="styles\notes.css">
 </head>
 <body>
-    <header>
-        <h1>Smart Notes</h1>
-        <p class="tagline">Capture and organize your notes and study materials.</p>
-    </header>
+    <div class="navigation-icons">
+        <a href="#" aria-label="Home">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3L2 12H5V21H10V15H14V21H19V12H22L12 3Z" fill="#333333"/>
+            </svg>
+        </a>
+        <a href="#" onclick="history.back()" aria-label="Back">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="#333333"/>
+            </svg>
+        </a>
+    </div>
 
-    <main class="notes-section">
-        <form id="noteForm">
-            <input type="text" id="noteTitle" placeholder="Note Title" required>
-            <textarea id="noteContent" placeholder="Note Content" required></textarea>
-            <button type="submit" class="btn">Add Note</button>
-        </form>
+    <div class="content-wrapper">
+        <header>
+            <h1>Smart Notes</h1>
+            <p class="tagline">Capture and organize your notes and study materials.</p>
+        </header>
 
+        <div class="notes-container">
+            <form id="noteForm">
+                <input type="text" id="noteTitle" placeholder="Note Title" required>
+                <textarea id="noteContent" placeholder="Note Content" required></textarea>
+                <button type="submit" class="btn">Add Note</button>
+            </form>
+        </div>
+    </div>
+    <div class="display">
+        <div class="notes-heading">Notes</div>
         <div id="notesList" aria-label="Notes list"></div>
-    </main>
+    </div>
+    <div class="popup" id="notePopup">
+        <h3 id="popupTitle"></h3>
+        <p id="popupContent"></p>
+        <button class="close-btn" id="closePopup">x</button>
+    </div>
 
     <footer>
         <p>© 2024 StudySmart. All rights reserved.</p>
     </footer>
-
-    <script src="scripts\notes.js"></script>
+    <script src="scripts/notes.js"></script>
 </body>
 </html>

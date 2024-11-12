@@ -51,8 +51,7 @@ body {
     justify-content: center;
     padding: 40px 20px;
     margin-top: 40px;
-    /* Add this line to move content up */
-    transform: translateY(-10vh); /* Adjust the value as needed - increase for moving up more, decrease for moving up less */
+    transform: translateY(-10vh);
 }
 
 header {
@@ -71,55 +70,78 @@ header .tagline {
     color: #7f8c8d;
 }
 
-.feature-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: center;
-    max-width: 1200px;
-    padding: 20px;
-}
-
-.feature-card {
+.timer-container {
     background-color: #fff;
-    padding: 30px;
+    padding: 40px;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    width: 320px;
+    width: 550px; /* Slightly increased width */
+    max-width: 90%;
     text-align: center;
-    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.feature-card:hover {
-    transform: translateY(-5px);
+.timer-input-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-.feature-card h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    color: #34495e;
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
 }
 
-.feature-card p {
-    font-size: 1.1rem;
-    margin-bottom: 25px;
+.input-wrapper input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.input-wrapper label {
+    font-size: 0.8rem;
     color: #7f8c8d;
+}
+.button-group {
+    display: flex;
+    gap: 10px; /* Spacing between buttons */
+    width: 100%; /* Ensures the button container takes full width */
+    justify-content: center;
 }
 
 .btn {
-    display: inline-block;
-    padding: 12px 25px;
+    padding: 10px 20px; /* Sets padding for buttons */
     background-color: #3498db;
     color: white;
     text-decoration: none;
     border-radius: 8px;
     transition: all 0.3s ease;
     font-weight: 500;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap; /* Prevents buttons from growing to multiple lines */
 }
 
 .btn:hover {
-    background-color: #2980b9;
+    background-color: #3498db;
     transform: scale(1.05);
+}
+
+
+#timer {
+    margin-top: 20px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2c3e50;
 }
 
 footer {
@@ -132,16 +154,16 @@ footer {
 }
 
 @media (max-width: 768px) {
-    header h1 {
-        font-size: 2.5rem;
+    .content-wrapper {
+        padding: 20px 10px;
     }
 
-    .feature-card {
+    .timer-container {
         width: 100%;
         max-width: 320px;
     }
 
-    .content-wrapper {
-        padding: 20px 10px;
+    header h1 {
+        font-size: 2.5rem;
     }
 }

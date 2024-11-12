@@ -45,7 +45,7 @@ body {
 
 .content-wrapper {
     transform: none;
-    margin-top: 80px;
+    margin-top: 25px;
     padding: 40px 20px;
     display: flex;
     flex-direction: column;
